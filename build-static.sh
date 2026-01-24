@@ -31,9 +31,21 @@ cd "aria2-${ARIA2_VERSION}"
 # Configure flags for static build
 export CC="clang"
 export CXX="clang++"
-export CFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13"
-export CXXFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13 -std=c++11"
-export LDFLAGS="-arch ${ARCH}"
+
+# Only set -arch flag when cross-compiling
+NATIVE_ARCH=$(uname -m)
+if [ "${ARCH}" = "${NATIVE_ARCH}" ]; then
+    export CFLAGS="-O2 -mmacosx-version-min=10.13"
+    export CXXFLAGS="-O2 -mmacosx-version-min=10.13 -std=c++11"
+    export LDFLAGS=""
+else
+    export CFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13"
+    export CXXFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13 -std=c++11"
+    export LDFLAGS="-arch ${ARCH}"
+fi
+
+echo "   Native arch: ${NATIVE_ARCH}, Target arch: ${ARCH}"
+echo "   CFLAGS: ${CFLAGS}"
 
 # For completely static build, we need to disable features that require external libs
 echo "⚙️  Configuring..."
