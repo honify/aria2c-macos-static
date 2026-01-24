@@ -1,0 +1,95 @@
+name: Build and Release aria2c
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-arm64:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build static aria2c for arm64
+        run: |
+          chmod +x build-static.sh
+          ./build-static.sh
+
+      - name: Verify binary
+        run: |
+          file aria2c
+          ./aria2c --version
+          otool -L aria2c
+
+      - name: Rename binary
+        run: mv aria2c aria2c-arm64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aria2c-arm64
+          path: aria2c-arm64
+
+  build-x86_64:
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build static aria2c for x86_64
+        run: |
+          chmod +x build-static.sh
+          ./build-static.sh
+
+      - name: Verify binary
+        run: |
+          file aria2c
+          ./aria2c --version
+          otool -L aria2c
+
+      - name: Rename binary
+        run: mv aria2c aria2c-x86_64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aria2c-x86_64
+          path: aria2c-x86_64
+
+  release:
+    needs: [build-arm64, build-x86_64]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List artifacts
+        run: |
+          echo "Downloaded artifacts:"
+          find artifacts -type f
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: aria2c Static Binaries ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          body: |
+            Static aria2c binaries for macOS (no external library dependencies)
+            
+            - `aria2c-arm64` - For Apple Silicon Macs (M1/M2/M3)
+            - `aria2c-x86_64` - For Intel Macs
+            
+            Built with: openssl, c-ares, libssh2, zlib, expat
+          files: |
+            artifacts/aria2c-arm64/aria2c-arm64
+            artifacts/aria2c-x86_64/aria2c-x86_64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
