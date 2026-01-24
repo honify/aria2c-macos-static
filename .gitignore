@@ -1,0 +1,11 @@
+# Build artifacts
+build-*/
+install-*/
+aria2-*.tar.xz
+aria2c-arm64
+aria2c-x86_64
+aria2c-universal
+checksums.txt
+
+# macOS
+.DS_Store

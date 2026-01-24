@@ -1,0 +1,6 @@
+This repository contains build scripts for aria2.
+
+aria2 is licensed under the GNU General Public License v2.0.
+See: https://github.com/aria2/aria2/blob/master/COPYING
+
+The build scripts in this repository are provided as-is without warranty.
