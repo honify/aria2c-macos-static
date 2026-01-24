@@ -35,7 +35,7 @@ jobs:
 
   build-x86_64:
     name: Build for Intel (x86_64)
-    runs-on: macos-13  # Intel runner
+    runs-on: macos-15  # Intel runner
     
     steps:
       - uses: actions/checkout@v4
