@@ -35,8 +35,11 @@ jobs:
           chmod +x build-static.sh
           ./build-static.sh arm64
       
-      - name: Create checksum
+      - name: Verify and prepare binary
         run: |
+          ls -la
+          file aria2c-arm64
+          ./aria2c-arm64 --version
           shasum -a 256 aria2c-arm64 > aria2c-arm64.sha256
       
       - name: Create release
@@ -72,8 +75,11 @@ jobs:
           chmod +x build-static.sh
           ./build-static.sh x86_64
       
-      - name: Create checksum
+      - name: Verify and prepare binary
         run: |
+          ls -la
+          file aria2c-x86_64
+          ./aria2c-x86_64 --version
           shasum -a 256 aria2c-x86_64 > aria2c-x86_64.sha256
       
       - name: Create release
