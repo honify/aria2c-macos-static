@@ -5,10 +5,12 @@ set -e
 
 ARIA2_VERSION="${ARIA2_VERSION:-1.37.0}"
 ARCH="${1:-$(uname -m)}"
-BUILD_DIR="$(pwd)/build-${ARCH}"
-INSTALL_DIR="$(pwd)/install-${ARCH}"
+ROOT_DIR="$(pwd)"
+BUILD_DIR="${ROOT_DIR}/build-${ARCH}"
+INSTALL_DIR="${ROOT_DIR}/install-${ARCH}"
 
 echo "🔨 Building aria2c ${ARIA2_VERSION} for ${ARCH}"
+echo "   Root directory: ${ROOT_DIR}"
 echo "   Build directory: ${BUILD_DIR}"
 echo "   Install directory: ${INSTALL_DIR}"
 
@@ -97,6 +99,6 @@ echo ""
 "${INSTALL_DIR}/bin/aria2c" --version | head -1
 
 # Copy to root for convenience
-cp "${INSTALL_DIR}/bin/aria2c" "../aria2c-${ARCH}"
+cp "${INSTALL_DIR}/bin/aria2c" "${ROOT_DIR}/aria2c-${ARCH}"
 echo ""
-echo "📋 Output: $(pwd)/../aria2c-${ARCH}"
+echo "📋 Output: ${ROOT_DIR}/aria2c-${ARCH}"
