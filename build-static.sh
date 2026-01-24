@@ -31,9 +31,9 @@ cd "aria2-${ARIA2_VERSION}"
 # Configure flags for static build
 export CC="clang"
 export CXX="clang++"
-CFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13"
-CXXFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13 -std=c++11"
-LDFLAGS="-arch ${ARCH}"
+export CFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13"
+export CXXFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13 -std=c++11"
+export LDFLAGS="-arch ${ARCH}"
 
 # For completely static build, we need to disable features that require external libs
 echo "⚙️  Configuring..."
@@ -56,10 +56,11 @@ echo "⚙️  Configuring..."
     --disable-metalink \
     --disable-websocket \
     --disable-nls \
+    CC="${CC}" \
+    CXX="${CXX}" \
     CFLAGS="${CFLAGS}" \
     CXXFLAGS="${CXXFLAGS}" \
-    LDFLAGS="${LDFLAGS}" \
-    ARIA2_STATIC=yes
+    LDFLAGS="${LDFLAGS}"
 
 # Build
 echo "🔧 Building..."
