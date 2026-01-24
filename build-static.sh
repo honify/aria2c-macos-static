@@ -31,9 +31,9 @@ cd "aria2-${ARIA2_VERSION}"
 # Configure flags for static build
 export CC="clang"
 export CXX="clang++"
-CFLAGS="-arch ${ARCH} -O2"
-CXXFLAGS="-arch ${ARCH} -O2"
-LDFLAGS="-arch ${ARCH} -static-libgcc -static-libstdc++"
+CFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13"
+CXXFLAGS="-arch ${ARCH} -O2 -mmacosx-version-min=10.13 -std=c++11"
+LDFLAGS="-arch ${ARCH}"
 
 # For completely static build, we need to disable features that require external libs
 echo "⚙️  Configuring..."
