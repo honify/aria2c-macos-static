@@ -17,12 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup Xcode and accept license
+      - name: Verify compiler
         run: |
-          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          sudo xcodebuild -license accept || true
-          xcode-select -p
-          gcc --version
+          clang --version
+          which clang
+          echo "int main() { return 0; }" > test.c
+          clang -o test test.c
+          ./test
+          echo "✅ Compiler works!"
       
       - name: Install dependencies
         run: |
@@ -47,12 +49,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup Xcode and accept license
+      - name: Verify compiler
         run: |
-          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          sudo xcodebuild -license accept || true
-          xcode-select -p
-          gcc --version
+          clang --version
+          which clang
+          echo "int main() { return 0; }" > test.c
+          clang -o test test.c
+          ./test
+          echo "✅ Compiler works!"
       
       - name: Install dependencies
         run: |

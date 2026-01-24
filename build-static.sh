@@ -29,6 +29,8 @@ tar xf "../aria2-${ARIA2_VERSION}.tar.xz"
 cd "aria2-${ARIA2_VERSION}"
 
 # Configure flags for static build
+export CC="clang"
+export CXX="clang++"
 CFLAGS="-arch ${ARCH} -O2"
 CXXFLAGS="-arch ${ARCH} -O2"
 LDFLAGS="-arch ${ARCH} -static-libgcc -static-libstdc++"
