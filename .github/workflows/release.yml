@@ -16,16 +16,13 @@ jobs:
       - name: Build static aria2c for arm64
         run: |
           chmod +x build-static.sh
-          ./build-static.sh
+          ./build-static.sh arm64
 
       - name: Verify binary
         run: |
-          file aria2c
-          ./aria2c --version
-          otool -L aria2c
-
-      - name: Rename binary
-        run: mv aria2c aria2c-arm64
+          file aria2c-arm64
+          ./aria2c-arm64 --version
+          otool -L aria2c-arm64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -42,16 +39,13 @@ jobs:
       - name: Build static aria2c for x86_64
         run: |
           chmod +x build-static.sh
-          ./build-static.sh
+          ./build-static.sh x86_64
 
       - name: Verify binary
         run: |
-          file aria2c
-          ./aria2c --version
-          otool -L aria2c
-
-      - name: Rename binary
-        run: mv aria2c aria2c-x86_64
+          file aria2c-x86_64
+          ./aria2c-x86_64 --version
+          otool -L aria2c-x86_64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
