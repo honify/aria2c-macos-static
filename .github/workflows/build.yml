@@ -1,9 +1,6 @@
 name: Build aria2c Static
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 env:
